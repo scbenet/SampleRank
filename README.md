@@ -5,7 +5,7 @@ Written in Python 3.9
 
 Dependencies: None so far
 
-Run with 'python3 test.py "Artist Name" "Song Name"
+Run with "python3 test.py 'Artist Name' 'Song Name'"
 
 TODO:
     - Implement database
