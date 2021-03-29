@@ -7,32 +7,30 @@ import sys
 
 def get_samples_from_page(url):
 
-    # Gets html from the specified page
+    # Gets html from the specified page, if no sample page return empty list
     http = urllib3.PoolManager()
-    r = http.request('GET', url)
+    try:
+        r = http.request('GET', url)
+    except:
+        return []
 
-    # Converts data to string and isolates relevant part of page
+    # Converts data to string (make it searchable with regex)
     htm = str(r.data)
-    matc = []
-    if "Contains samples" in htm:
-        # htm = htm.split("Contains samples")[1]
-        # htm = htm.split("Was sampled")[0]
-        # htm = htm.split("Was covered")[0]
 
-        # Gets list of samples in the song
-        matches = re.findall('title=".*?"', htm)
-        matc = matc + list(set(matches))
+    # Gets list of samples in the song
+    matches = re.findall('title=".*?"', htm)
+    matc = list(set(matches))
 
-        matc = list(filter((lambda x: "\\'s" in x), matc))
+    matc = list(filter((lambda x: "\\'s" in x), matc))
 
-        for n in range(len(matc)):
-            matc[n] = matc[n].removeprefix("title=\"")
-            matc[n].removesuffix("\"")
-            re.sub(r'\W+', '', matc[n])
-            matc[n] = html.unescape(matc[n])
-
-        for mat in matc:
-            print(mat)
+    # Format list
+    for n in range(len(matc)):
+        matc[n] = matc[n].removeprefix("title=\"")
+        matc[n] = html.unescape(matc[n])
+        matc[n] = matc[n].removesuffix('\"')
+    # Print list to console
+    for mat in matc:
+        print(mat)
 
 
 if __name__ == "__main__":
