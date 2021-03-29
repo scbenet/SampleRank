@@ -15,9 +15,9 @@ def get_samples_from_page(url):
     htm = str(r.data)
     matc = []
     if "Contains samples" in htm:
-        htm = htm.split("Contains samples")[1]
-        htm = htm.split("Was sampled")[0]
-        htm = htm.split("Was covered")[0]
+        # htm = htm.split("Contains samples")[1]
+        # htm = htm.split("Was sampled")[0]
+        # htm = htm.split("Was covered")[0]
 
         # Gets list of samples in the song
         matches = re.findall('title=".*?"', htm)
@@ -43,7 +43,7 @@ if __name__ == "__main__":
 
     artist = artist.replace(" ", "-")
     song_title = song_title.replace(" ", "-")
-    ws_url = f'https://www.whosampled.com/{artist}/{song_title}'
+    ws_url = f'https://www.whosampled.com/{artist}/{song_title}/samples'
     print(ws_url)
     get_samples_from_page(ws_url)
 
